@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="neu.edu.his.mapper.DepartmentDoctorMapper">
+    <select id="getAllDepartments" resultType="neu.edu.his.bean.DepartmentBean">
+        select * from department;
+    </select>
+
+    <select id="getDoctorByDept" parameterType="int" resultType="neu.edu.his.bean.DoctorBean">
+        select * from doctor where deptID = #{deptID};
+    </select>
+</mapper>

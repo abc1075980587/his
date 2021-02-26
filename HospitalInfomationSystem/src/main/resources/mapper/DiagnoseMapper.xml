@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="neu.edu.his.mapper.DiagnoseMapper">
+
+    <!--得到三天内的挂号记录，实际应用中采用该语句-->
+    <!--<select id="getDaiZhenList" resultType="neu.edu.his.bean.RegistrationBean">-->
+        <!--select recordID,regisID,name,sex,identityID,age,diagnosedStatement from registrationform where visitDate >-->
+        <!--DATE_SUB(DATE_FORMAT(NOW(),'%Y-%m-%d'),INTERVAL 3 DAY)-->
+        <!--and diagnosedStatement='待诊';-->
+    <!--</select>-->
+
+    <!--得到三天内的已诊记录，实际应用中采用该语句-->
+    <!--<select id="getDaiZhenList" resultType="neu.edu.his.bean.RegistrationBean">-->
+    <!--select recordID,regisID,name,sex,identityID,age,diagnosedStatement from registrationform where visitDate >-->
+    <!--DATE_SUB(DATE_FORMAT(NOW(),'%Y-%m-%d'),INTERVAL 3 DAY)-->
+    <!--and diagnosedStatement='待诊';-->
+    <!--</select>-->
+
+    <!--得到大于某日期的挂号记录，演示项目采用该语句-->
+    <select id="getDaiZhenList" resultType="neu.edu.his.bean.RegistrationBean">
+        select recordID,regisID,name,sex,identityID,age,diagnosedStatement from registrationform
+        where visitDate >'2021-02-16'and diagnosedStatement='待诊';
+    </select>
+
+    <!--得到大于某日期的已诊记录，演示项目采用该语句-->
+    <select id="getYiZhenList" resultType="neu.edu.his.bean.RegistrationBean">
+        select recordID,regisID,name,sex,identityID,age,diagnosedStatement from registrationform
+        where visitDate >'2021-02-16'and diagnosedStatement='已诊';
+    </select>
+
+    <insert id="diagnose" parameterType="neu.edu.his.bean.MedicalRecordBean">
+        insert into medicalrecord values(#{recordId},#{regisId},#{chiefComplaint},#{presentIllnessHistory},#{recentTreatment},#{pastHistory},
+        #{allergyHistory},#{physicalExam},#{suggestion},#{attention},#{statement},#{drugStatement},#{isDeleted});
+    </insert>
+
+    <update id="updateRegisList" parameterType="int">
+        update registrationform set diagnosedStatement='已诊' where recordID=#{recordId};
+    </update>
+</mapper>

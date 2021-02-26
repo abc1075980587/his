@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="neu.edu.his.mapper.ReturnRegisMapper">
+    <select id="getDaiZhen" resultType="neu.edu.his.bean.RegistrationBean">
+        select recordID,regisID,name,identityID,visitDate,mornOrAfter,deptName,diagnosedStatement
+        from registrationform,department where  diagnosedStatement='待诊' and registrationform.deptID=department.deptID;
+    </select>
+
+    <update id="returnRegis" parameterType="int">
+        update registrationform set diagnosedStatement='已退' where regisID=#{regisId};
+    </update>
+</mapper>

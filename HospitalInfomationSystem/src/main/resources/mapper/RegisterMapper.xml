@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="neu.edu.his.mapper.RegisterMapper">
+    <insert id="register" parameterType="neu.edu.his.bean.RegistrationBean">
+      insert into registrationform values(null,#{recordId},#{name},#{sex},#{identityId},#{birthDate},#{age},
+      #{address},#{visitDate},#{mornOrAfter},#{deptId},#{docid},#{regisLevel},#{chargeWay},#{needForm},#{regisDate},
+       #{regisClerkId},#{diagnosedStatement},#{isDeleted});
+    </insert>
+
+    <select id="getIncrementRecordId"  resultType="int">
+        select max(recordID)+1 from registrationform;
+    </select>
+</mapper>

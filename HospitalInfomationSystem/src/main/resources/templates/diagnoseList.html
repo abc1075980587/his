@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <script type="text/javascript" th:src="@{/lib/html5shiv.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/respond.min.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+
+    <title>医生诊疗</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 门诊医生 <span class="c-gray en">&gt;</span> 门诊病历 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<table class="table">
+    <tr>
+        <td  class="va-t">
+            <div class="panel panel-default">
+                <!--<div class="panel-header">-->
+                <nav class="breadcrumb">
+                    <label>待诊患者列表</label>
+                    <a class="btn btn-default radius r" style="line-height:1.6em;margin-top:3px" href="javascript:initZTree();" title="刷新"><i
+                            class="Hui-iconfont">&#xe68f;</i></a>
+                </nav>
+                <table class="list">
+                    <tbody>
+                    <tr>
+                        <td width="70" height="29"><div class="STYLE1" align="center">病历号</div></td>
+                        <td width="70" height="29"><div class="STYLE1" align="center">挂号id</div></td>
+                        <td width="70"><div class="STYLE1" align="center">姓名</div></td>
+                        <td width="50"><div class="STYLE1" align="center">性别</div></td>
+                        <td width="120"><div class="STYLE1" align="center">身份证号</div></td>
+                        <td width="60"><div class="STYLE1" align="center">诊断状态</div></td>
+                        <td width="100"><div class="STYLE1" align="center">*操作</div></td>
+                    </tr>
+                    <tr th:each="daiZhen : ${daiZhenList}">
+                        <td width="70" height="29"><div class="STYLE1" align="center" th:text="${daiZhen.getRecordId()}"></div></td>
+                        <td width="70" height="29"><div class="STYLE1" align="center" th:text="${daiZhen.getRegisId()}"></div></td>
+                        <td width="70"><div class="STYLE1" align="center" th:text="${daiZhen.getName()}"></div></td>
+                        <td width="50"><div class="STYLE1" align="center" th:text="${daiZhen.getSex()}"></div></td>
+                        <td width="120"><div class="STYLE1" align="center" th:text="${daiZhen.getIdentityId()}"></div></td>
+                        <td width="60"><div class="STYLE1" align="center" th:text="${daiZhen.getDiagnosedStatement()}"></div></td>
+                        <td width="100"><div class="STYLE1" align="center"><a th:href="@{/diagnoseStart+{recordId}+{regisId}(recordId=${daiZhen.recordId},regisId=${daiZhen.regisId})}">开始诊断</a></div></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!--<div class="panel-body">-->
+                    <!--<ul id="treeDemo" class="ztree"></ul>-->
+                <!--</div>-->
+            </div>
+        </td>
+        <!--<td class="va-t">-->
+            <!--<iframe ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO width=100% height=600px-->
+                    <!--SRC="diagnose.html">-->
+            <!--</iframe>-->
+        <!--</td>-->
+    </tr>
+</table>
+<br/><br/><br/>
+<table class="table">
+    <tr>
+        <td class="va-t">
+            <div class="panel panel-default">
+                <nav class="breadcrumb">
+                    <label>已诊患者列表</label>
+                    <a class="btn btn-default radius r" style="line-height:1.6em;margin-top:3px" href="javascript:initZTree();" title="刷新"><i
+                            class="Hui-iconfont">&#xe68f;</i></a>
+                </nav>
+                <table class="list">
+                    <tbody>
+                    <tr>
+                        <td width="70" height="29"><div class="STYLE1" align="center">病历号</div></td>
+                        <td width="70" height="29"><div class="STYLE1" align="center">挂号id</div></td>
+                        <td width="70"><div class="STYLE1" align="center">姓名</div></td>
+                        <td width="50"><div class="STYLE1" align="center">性别</div></td>
+                        <td width="120"><div class="STYLE1" align="center">身份证号</div></td>
+                        <td width="60"><div class="STYLE1" align="center">诊断状态</div></td>
+                        <td width="100"><div class="STYLE1" align="center">*</div></td>
+                    </tr>
+                    <tr th:each="yiZhen : ${yiZhenList}">
+                        <td width="70" height="29"><div class="STYLE1" align="center" th:text="${yiZhen.getRecordId()}"></div></td>
+                        <td width="70" height="29"><div class="STYLE1" align="center" th:text="${yiZhen.getRegisId()}"></div></td>
+                        <td width="70"><div class="STYLE1" align="center" th:text="${yiZhen.getName()}"></div></td>
+                        <td width="50"><div class="STYLE1" align="center" th:text="${yiZhen.getSex()}"></div></td>
+                        <td width="120"><div class="STYLE1" align="center" th:text="${yiZhen.getIdentityId()}"></div></td>
+                        <td width="60"><div class="STYLE1" align="center" th:text="${yiZhen.getDiagnosedStatement()}"></div></td>
+                        <td width="100"><div class="STYLE1" align="center"><a href="#"></a></div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<!--/_footer 作为公共模版分离出去-->
+<!--使用ztree插件，也可以自行选择其他插件显示 -->
+<!--<script type="text/javascript" th:src="@{/lib/zTree/v3/js/jquery.ztree.all-3.5.min.js}"></script>-->
+
+
+<!--
+<script type="text/javascript">
+var setting = {
+	view: {
+		dblClickExpand: false,
+		showLine: false,
+		selectedMulti: false
+	},
+	data: {
+		simpleData: {
+			enable:true,
+			idKey: "id",
+			pIdKey: "pId",
+			rootPId: ""
+		}
+	},
+	callback: {
+		beforeClick: function(treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("tree");
+			if (treeNode.isParent) {
+				zTree.expandNode(treeNode);
+				return false;
+			} else {
+				demoIframe.attr("src",treeNode.file + ".jsp");
+				return true;
+			}
+		}
+	}
+};
+
+var zNodes =[
+	{ id:1, pId:0, name:"一级分类", open:true},
+	{ id:11, pId:1, name:"未诊患者", open:true},
+	{ id:111, pId:11, name:"张三", file:"system-base"},
+	{ id:112, pId:11, name:"李四", file:"system-base"},
+	{ id:113, pId:11, name:"王五", file:"system-base"},
+	{ id:114, pId:11, name:"赵六", file:"system-base"},
+	{ id:115, pId:11, name:"耿七", file:"system-base"},
+	{ id:12, pId:1, name:"已诊患者"},
+	{ id:121, pId:12, name:"张龙", file:"system-base"},
+	{ id:122, pId:12, name:"赵虎", file:"system-base"},
+];
+
+var code;
+
+function showCode(str) {
+	if (!code) code = $("#code");
+	code.empty();
+	code.append("<li>"+str+"</li>");
+}
+
+$(document).ready(function(){
+	var t = $("#treeDemo");
+	t = $.fn.zTree.init(t, setting, zNodes);
+	demoIframe = $("#testIframe");
+	//demoIframe.on("load", loadReady);
+	var zTree = $.fn.zTree.getZTreeObj("tree");
+	//zTree.selectNode(zTree.getNodeByParam("id",'11'));
+});
+</script>
+-->
+</body>
+</html>

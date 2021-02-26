@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="/favicon.ico" >
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <script type="text/javascript" th:src="@{/lib/html5shiv.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/respond.min.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <title>Title</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 门诊医生 <span class="c-gray en">&gt;</span> 医生开药 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<br/>
+<a href="/showMedicalRecordList" >&nbsp;&nbsp;返回病历列表 </a><br/>
+<br/>
+<form method="post" class="form form-horizontal" id="drugs" name="drugs">
+    <div class="row c1">
+        <label class="form-label col-xs-1 col-sm-1"><span class="c-red">*</span>药品：</label>
+        <div class="formControls col-xs-2 col-sm-2">
+        <span class="select-box">
+            <select class="select" id="drugsId" name="drugsId">
+                <option style='display: none'>请选择</option>
+                <option  th:each="drug:${drugsList}" th:text="${drug.getDrugsName()}" th:value="${drug.getDrugsId()}"></option>
+            </select>
+        </span>
+        </div>
+        <label class="form-label col-xs-1 col-sm-1"><span class="c-red">*</span>数量：</label>
+        <div class="formControls col-xs-2 col-sm-2">
+            <input type="text" class="input-text"  id="num" name="num">
+        </div>
+        <div class="formControls col-xs-2 col-sm-2">
+            <button id="drugAdd" class="btn btn-primary radius"> 增药 </button>
+        </div>
+    </div>
+</form>
+<br/><br/><br/>
+<div class="panel panel-default">
+    <div class="panel-header">
+    <nav class="breadcrumb"><label>已添加药品</label></nav>
+    <table class="list">
+        <tbody>
+        <tr>
+            <th width="30"><div class="STYLE1" align="center">药品id</div></th>
+            <th width="30"><div class="STYLE1" align="center">药品名称</div></th>
+            <th width="20"><div class="STYLE1" align="center">数量</div></th>
+        </tr>
+        </tbody>
+        <tr th:each="tdb:${session.tdbList}">
+            <td width="30"><div class="STYLE1" align="center" th:text="${tdb.getDrugid()}"></div></td>
+            <td width="25"><div class="STYLE1" align="center" th:text="${tdb.getDrugname()}"></div></td>
+            <td width="20"><div class="STYLE1" align="center" th:text="${tdb.getNum()}"></div></td>
+        </tr>
+    </table>
+    </div>
+</div>
+<br/><br/>
+<form method="post" class="form form-horizontal" id="prescript_form" name="prescript_form">
+    <label>&nbsp;&nbsp;药品添加完成后开立处方（创建处方名称，选择开立医生）：</label>
+    <br/>
+    <div class="row c1">
+        <label class="form-label col-xs-1 col-sm-1"><span class="c-red">*</span>名称：</label>
+        <div class="formControls col-xs-2 col-sm-2">
+            <input type="text" class="input-text" value="" placeholder="" id="prescriptionName" name="prescriptionName">
+        </div>
+        <label class="form-label col-xs-1 col-sm-1"><span class="c-red">*</span>医生：</label>
+        <div class="formControls col-xs-2 col-sm-2">
+            <span class="select-box">
+                <select class="select" id="docid" name="docid">
+                    <option style='display: none'>请选择</option>
+                    <option  th:each="docL:${docList}" th:text="${docL.getDocName()}" th:value="${docL.getDocid()}"></option>
+                </select>
+            </span>
+        </div>
+        <div class="row cl">
+            <div class="formControls col-xs-2 col-sm-2">
+                <button id="prescriptionSubmit" class="btn btn-primary radius"> 开立处方 </button>
+            </div>
+            <label class="form-label col-xs-5 col-sm-5"></label>
+        </div>
+    </div>
+</form>
+
+<br/><br/>
+
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+
+<script>
+    $("#drugAdd").click(function () {
+        var drugid=$("#drugsId option:selected").val();
+        var num=document.forms["drugs"]["num"].value;
+        if(isBlank(drugid) || isBlank(num) || (drugid=="请选择")){
+            window.confirm("请完善信息");
+        }else{
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({"drugid": drugid,"num": num}),
+                url: "/addDrug",
+                success: function (data) {
+
+                }
+            });
+        }
+    });
+
+    function isBlank(str){
+        if(str == "" || str == null || str == undefined){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    $("#prescriptionSubmit").click(function () {
+        var prescriptionName=document.forms["prescript_form"]["prescriptionName"].value;
+        var docid=$("#docid option:selected").val();
+        if(isBlank(prescriptionName) || isBlank(docid) || docid=="请选择"){
+            window.confirm("请完善信息");
+        }else {
+            var param = {
+                "prescriptionName":prescriptionName,
+                "docid":docid
+            };
+            $.ajax({
+                url: "/prescriptionSubmit", //请求url
+                data: param,    //请求参数
+                async: true,    //是否异步
+                success: function f(result) {
+                    // location.href = "/prescript";   //重新加载界面，同步数据库信息
+                }
+            });
+            window.confirm("结果已提交！");
+        }
+    });
+
+</script>
+
+</body>
+</html>

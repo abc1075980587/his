@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="neu.edu.his.mapper.PrescribMapper">
+
+    <select id="getMedicalRecord" resultType="neu.edu.his.bean.MedicalRecordBean">
+        select * from medicalrecord where statement='诊毕' and drugStatement='未开药';
+    </select>
+
+    <insert id="prescrib" parameterType="neu.edu.his.bean.PrescriptionBean">
+        insert into prescription values(null,#{prescriptionName},#{recordId},#{regisId},#{docid},#{drugsId},#{date},
+        #{isTaken},#{isReturned},#{isAddedToCharge},#{isDeleted});
+    </insert>
+
+    <select id="getAllDoc" resultType="neu.edu.his.bean.DoctorBean">
+        select * from doctor;
+    </select>
+
+    <select id="getAllDrugs" resultType="neu.edu.his.bean.DrugsBean">
+        select * from drugs;
+    </select>
+
+    <select id="getDrugNameById" resultType="String" parameterType="String">
+        select drugsName from drugs where drugsID=#{drugid};
+    </select>
+
+    <update id="updateDrugStatement" parameterType="int">
+        update medicalrecord set drugStatement='已开药' where recordID=#{recordId};
+    </update>
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="neu.edu.his.mapper.ChargeMapper">
+
+    <select id="getPrescriptionWei" resultType="neu.edu.his.bean.PrescriptionBean">
+        select prescriptionID,prescriptionName,recordID,regisID,docName,drugsID,date,isTaken,isReturned,isAddedToCharge from prescription,doctor
+        where isAddedToCharge='未生成' and prescription.docID=doctor.docID;
+    </select>
+
+    <select id="getPrescriptionYi" resultType="neu.edu.his.bean.PrescriptionBean">
+        select prescriptionID,prescriptionName,recordID,regisID,docName,drugsID,date,isTaken,isReturned,isAddedToCharge from prescription,doctor
+        where isAddedToCharge='已生成' and prescription.docID=doctor.docID and isReturned='未缴费';
+    </select>
+
+    <select id="getIncrementReceiptId" resultType="int">
+        select max(receiptID)+1 from chargelist;
+    </select>
+
+    <select id="getIncrementReceiptSeqNum" resultType="int">
+        select max(receiptSeqNum)+1 from receipt;
+    </select>
+
+    <insert id="createChargeList" parameterType="neu.edu.his.bean.ChargeListBean">
+        insert into chargelist values(null,#{regisId},#{receiptId},#{proType},#{drugsId},null,#{itemName},
+                                      #{singleCost},#{num},#{paydate},#{regisClerkId},#{isDeleted});
+    </insert>
+
+    <select id="getRegisIdByPrescriptionId" parameterType="int" resultType="int">
+        select regisID from prescription where prescriptionID=#{prescriptionId};
+    </select>
+
+    <select id="getDrugsIdByPrescriptionId" parameterType="int" resultType="String">
+        select drugsID from prescription where prescriptionID=#{prescriptionId};
+    </select>
+
+    <select id="getDrugPriceByDrugId" parameterType="String" resultType="double">
+        select drugsPrice from drugs where drugsID=#{drugsId};
+    </select>
+
+    <update id="updateIsAddedToChargeList" parameterType="int">
+        update prescription set isAddedToCharge='已生成' where prescriptionID=#{prescriptionId};
+    </update>
+
+    <select id="getChargeListByRegisId" parameterType="int" resultType="neu.edu.his.bean.ChargeListBean">
+        select * from chargelist where regisID=#{regisId};
+    </select>
+
+    <update id="updateIsReturned" parameterType="int">
+        update prescription set isReturned='已缴费' where regisID=#{regisId};
+    </update>
+
+    <select id="getReceiptIdByRegisId" parameterType="int" resultType="int">
+        select distinct(receiptID) from chargelist where regisID=#{regisId};
+    </select>
+
+    <insert id="createReceipt" parameterType="neu.edu.his.bean.ReceiptBean">
+        insert into receipt values (#{receiptId},#{receiptSeqNum},#{cost},#{statement},#{date},#{regisId},#{isDeleted});
+    </insert>
+
+</mapper>

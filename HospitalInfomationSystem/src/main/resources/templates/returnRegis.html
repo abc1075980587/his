@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" th:src="@{/lib/html5shiv.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/respond.min.js}"></script>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+
+    <script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}"></script>
+    <title>退号</title>
+</head>
+<body>
+
+<nav class="breadcrumb">
+
+    <label>患者列表</label>
+    <br/><br/>
+
+</nav>
+<table class="list" border="1" >
+    <tbody>
+        <tr>
+            <td width="85" height="34"><div class="STYLE1" align="center">病历号</div></td>
+            <td width="70" height="34"><div class="STYLE1" align="center">挂号id</div></td>
+            <td width="50"><div class="STYLE1" align="center">姓名</div></td>
+            <td width="120"><div class="STYLE1" align="center">身份证号</div></td>
+            <td width="100"><div class="STYLE1" align="center">挂号日期</div></td>
+            <td width="40"><div class="STYLE1" align="center">午别</div></td>
+            <td width="90"><div class="STYLE1" align="center">看诊科室</div></td>
+            <td width="40"><div class="STYLE1" align="center">状态</div></td>
+            <td width="30"><div class="STYLE1" align="center">*操作</div></td>
+        </tr>
+
+
+        <tr th:each="regis : ${regisList}">
+            <td width="85" height="34"><div class="STYLE1" align="center" th:text="${regis.getRecordId()}"></div></td>
+            <td width="70" height="34"><div class="STYLE1" align="center" th:text="${regis.getRegisId()}"></div></td>
+            <td width="50"><div class="STYLE1" align="center" th:text="${regis.getName()}"></div></td>
+            <td width="120"><div class="STYLE1" align="center" th:text="${regis.getIdentityId()}"></div></td>
+            <td width="100"><div class="STYLE1" align="center" th:text="${regis.getVisitDate()}"></div></td>
+            <td width="40"><div class="STYLE1" align="center" th:text="${regis.getMornOrAfter()}"></div></td>
+            <td width="90"><div class="STYLE1" align="center" th:text="${regis.getDeptName()}"></div></td>
+            <td width="40"><div class="STYLE1" align="center" th:text="${regis.getDiagnosedStatement()}"></div></td>
+            <td width="30"><div class="STYLE1" align="center"><a th:href="@{/returnRegistration+{regisId}(regisId=${regis.regisId})}">
+                <button id="returnRegButton" onclick="alert('退号成功！')"> 退 号 </button></a></div></td>
+        </tr>
+
+    </tbody></table>
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script> <!--/_footer 作为公共模版分离出去-->
+
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" th:src="@{/lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/jquery.validation/1.14.0/jquery.validate.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/jquery.validation/1.14.0/validate-methods.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/jquery.validation/1.14.0/messages_zh.js}"></script>
+
+
+
+
+</body>
+</html>

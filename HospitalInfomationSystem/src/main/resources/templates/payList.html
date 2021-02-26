@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <script type="text/javascript" th:src="@{/lib/html5shiv.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/respond.min.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/skin/default/skin.css}" id="skin" />
+    <link rel="stylesheet" type="text/css" th:href="@{/h-ui.admin/css/style.css}" />
+    <script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+
+    <title>列表</title>
+</head>
+<body>
+
+<div class="main">
+    <div class="content">
+        &nbsp;收费<br/><br/>
+        <form method="post" id="searchByRegisId"  name="searchByRegisId" action="/showChargeList">
+            <label class="form-label col-xs-2 col-sm-2">请输入挂号id：</label><br/><br/>
+            <div class="formControls col-xs-2 col-sm-2">
+                <input type="text" class="input-text" id="regisId" name="regisId">
+            </div>
+            <div class="formControls col-xs-2 col-sm-2">
+                <button id="searchChargeList" type="submit" class="btn btn-primary radius">&nbsp;&nbsp;查 询&nbsp;&nbsp;</button>
+            </div>
+        </form>
+    </div>
+
+    <br/><br/><br/><br/>
+    <table class="table">
+        <tr>
+            <td  class="va-t">
+                <div class="panel panel-default">
+                    <!--<div class="panel-header">-->
+                    <nav class="breadcrumb">
+                        <label>处方表</label>
+                    </nav>
+                    <table class="list">
+                        <tbody>
+                        <tr>
+                            <th width="30"><div class="STYLE1" align="center">名称</div></th>
+                            <th width="30"><div class="STYLE1" align="center">病历号</div></th>
+                            <th width="20"><div class="STYLE1" align="center">挂号id</div></th>
+                            <th width="20"><div class="STYLE1" align="center">医生</div></th>
+                            <th width="50"><div class="STYLE1" align="center">开立时间</div></th>
+                            <th width="20"><div class="STYLE1" align="center">发药状态</div></th>
+                            <th width="20"><div class="STYLE1" align="center">缴费状态</div></th>
+                            <th width="30"><div class="STYLE1" align="center">费用单生成</div></th>
+                            <th width="20"><div class="STYLE1" align="center">*操作</div></th>
+                        </tr>
+                        </tbody>
+                        <tr th:each="pW:${pWeiList}">
+                            <td width="30"><div class="STYLE1" align="center" th:text="${pW.getPrescriptionName()}"></div></td>
+                            <td width="25"><div class="STYLE1" align="center" th:text="${pW.getRecordId()}"></div></td>
+                            <td width="20"><div class="STYLE1" align="center" th:text="${pW.getRegisId()}"></div></td>
+                            <td width="20"><div class="STYLE1" align="center" th:text="${pW.getDocName()}"></div></td>
+                            <td width="40"><div class="STYLE1" align="center" th:text="${pW.getDate()}"></div></td>
+                            <td width="20"><div class="STYLE1" align="center" th:text="${pW.getIsTaken()}"></div></td>
+                            <td width="20"><div class="STYLE1" align="center" th:text="${pW.getIsReturned()}"></div></td>
+                            <td width="30"><div class="STYLE1" align="center" th:text="${pW.getIsAddedToCharge()}"></div></td>
+                            <td width="20"><div class="STYLE1" align="center">
+                                <a id="createChargeL"  onclick="alert('缴费单生成完毕！')" th:href="@{/createCharge+{prescriptionId}(prescriptionId=${pW.prescriptionId})}">生成缴费单</a>
+                            </div></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <br/><br/>
+    <table class="table">
+        <tr>
+            <td  class="va-t">
+                <div class="panel panel-default">
+                    <!--<div class="panel-header">-->
+                    <nav class="breadcrumb">
+                        <label>处方表</label>
+                    </nav>
+                    <table class="list">
+                        <tbody>
+                        <tr>
+                            <th width="30"><div class="STYLE1" align="center">名称</div></th>
+                            <th width="30"><div class="STYLE1" align="center">病历号</div></th>
+                            <th width="20"><div class="STYLE1" align="center">挂号id</div></th>
+                            <th width="20"><div class="STYLE1" align="center">医生</div></th>
+                            <th width="50"><div class="STYLE1" align="center">开立时间</div></th>
+                            <th width="20"><div class="STYLE1" align="center">发药状态</div></th>
+                            <th width="20"><div class="STYLE1" align="center">缴费状态</div></th>
+                            <th width="30"><div class="STYLE1" align="center">费用单生成</div></th>
+                            <th width="20"><div class="STYLE1" align="center">*</div></th>
+                        </tr>
+                        </tbody>
+                        <tr th:each="pY:${pYiList}">
+                            <td width="30"><div class="STYLE1" align="center" th:text="${pY.getPrescriptionName()}"></div></td>
+                            <td width="25"><div class="STYLE1" align="center" th:text="${pY.getRecordId()}"></div></td>
+                            <td width="20"><div class="STYLE1" align="center" th:text="${pY.getRegisId()}"></div></td>
+                            <td width="20"><div class="STYLE1" align="center" th:text="${pY.getDocName()}"></div></td>
+                            <td width="40"><div class="STYLE1" align="center" th:text="${pY.getDate()}"></div></td>
+                            <td width="20"><div class="STYLE1" align="center" th:text="${pY.getIsTaken()}"></div></td>
+                            <td width="20"><div class="STYLE1" align="center" th:text="${pY.getIsReturned()}"></div></td>
+                            <td width="30"><div class="STYLE1" align="center" th:text="${pY.getIsAddedToCharge()}"></div></td>
+                            <td width="20"><div class="STYLE1" align="center"></div></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/layer/2.4/layer.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui.admin/js/H-ui.admin.js}"></script>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:src="@{/lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+<script type="text/javascript" th:src="@{lib/datatables/1.10.0/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/laypage/1.2/laypage.js}"></script>
+
+<script>
+    // //字符串判空方法
+    // function isBlank(str){
+    //     if(str == "" || str == null || str == undefined){
+    //         return true;
+    //     }else {
+    //         return false;
+    //     }
+    // }
+    // $("#searchChargeList").click(function () {
+    //     var regisId = document.forms["searchByRegisId"]["regisId"].value;
+    //
+    //     //判断是否有未填项
+    //     if(isBlank(regisId)){
+    //         window.confirm("请输入挂号id后查询！");
+    //         location.href = "payList.html";   //重新加载界面，同步数据库信息
+    //     }
+    // });
+
+</script>
+</body>
+</html>

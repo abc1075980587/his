@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="neu.edu.his.mapper.DrugsMapper">
+    <select id="getPresList" resultType="neu.edu.his.bean.PrescriptionBean">
+        select prescriptionID,prescriptionName,recordID,regisID,docName,drugsID,date,isTaken,isReturned,isAddedToCharge from prescription,doctor
+        where isAddedToCharge='已生成' and prescription.docID=doctor.docID and isReturned='已缴费' and isTaken='未发药';
+    </select>
+
+    <update id="updateIsTaken" parameterType="int">
+        update prescription set isTaken='已发药' where regisID=#{regisId};
+    </update>
+
+</mapper>

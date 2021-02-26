@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://localhost:3306/myhis?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8 #url
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml #����ӳ���ļ�
+  type-aliases-package: neu.edu.his/bean #����ʵ����
+

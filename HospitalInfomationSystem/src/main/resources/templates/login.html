@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
+    <meta charset="UTF-8">
+    <title>东软云医院系统</title>
+    <link href="https://cdn.bootcss.com/normalize/8.0.0/normalize.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{~/login.css}">
+
+</head>
+
+<body background="/images/25dba0acfe6c5c0cc22f056fc72e16bf.jpg">
+<div id="login">
+    <div class="icon"></div>
+    <div class="login-box">
+        <center>
+            <form role="form" action="/loginCheck" method="post">
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <h2>东软云医院系统</h2><br/>
+                <div>
+                    用户名：<input type="text"  id="loginID" name="loginID" class="input-text" placeholder="请输入用户名"/> <br/><br/>
+                    密　码：<input type="password"  id="password" name="password" class="input-text" placeholder="请输入密码"/> <br/><br/>
+                </div>
+                <div class="buttons">
+                    <input type="submit" name="submit" value="登 录" class="input-button" />
+                    &nbsp&nbsp&nbsp<input type="reset" name="reset" value="重 填" class="input-button" />
+                </div>
+            </form>
+        </center>
+    </div>
+</div>
+</body>
+</html>
